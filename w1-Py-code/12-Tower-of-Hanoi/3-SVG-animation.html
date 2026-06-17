@@ -1,0 +1,1664 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>3-SVG-animation</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="236288ac-b799-8005-91ea-ffba403ebe69" class="page sans"><header><h1 class="page-title" dir="auto"><strong>3-SVG-animation</strong></h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="36c288ac-b799-80b1-bbc3-c67d0d7f7b31" class=""><strong>河內塔 </strong>SVG 動畫<br/><a href="https://p3art.github.io/dir-Hanoi-Html/index.html">https://p3art.github.io/dir-Hanoi-Html/index.html</a></p></div><div style="display:contents" dir="auto"><h3 id="236288ac-b799-8076-8995-c6e8eadc570e" class=""><mark class="highlight-blue">SVGviewer<br/></mark><a href="https://www.svgviewer.dev/">https://www.svgviewer.dev/</a></h3></div><div style="display:contents" dir="auto"><p id="236288ac-b799-8020-a3a8-ed91a159a3da" class="">click above URL to open SVGviewer web page<br/>click clear button on page right up <br/><mark class="highlight-red">copy HTML code &amp; paste it into </mark>SVGviewer</p></div><div style="display:contents" dir="auto"><hr id="236288ac-b799-800e-a3fa-c589b5422b92"/></div><div style="display:contents" dir="auto"><p id="236288ac-b799-8024-bdce-c17310a77ca8" class="">repl name : Tower-of-Hanoi-7-disks.html </p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236288ac-b799-8030-8bb7-f102fe537c0a" class="code code-wrap"><code class="language-xml" style="white-space:pre-wrap;word-break:break-all">&lt;!--  Tower-of-Hanoi-7-disks.html  --&gt;
+&lt;!--  2019-04-18                      --&gt;
+&lt;!--  2026-05-28                      --&gt;
+&lt;!--                                           --&gt;
+&lt;!--  view HTML result online                  --&gt;
+&lt;!--  https://codebeautify.org/htmlviewer/     --&gt;
+&lt;!--  https://jakearchibald.github.io/svgomg/  --&gt;
+&lt;!--                                           --&gt;
+&lt;!--  svg online editor                                --&gt;
+&lt;!--  http://petercollingridge.appspot.com/svg-editor  --&gt;
+&lt;!--  code size : 910 lines                            --&gt;
+&lt;!--                                                   --&gt;
+&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:ev=&quot;http://www.w3.org/2001/xml-events&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; baseProfile=&quot;tiny&quot; height=&quot;462.0&quot; version=&quot;1.2&quot; width=&quot;924&quot;&gt;
+  &lt;polygon fill=&quot;white&quot; points=&quot;0 0 924 0 924 462.0 0 462.0&quot; stroke=&quot;blue&quot;/&gt;
+  &lt;polygon fill=&quot;lightblue&quot; points=&quot;22.0 22.0 902.0 22.0 902.0 440.0 22.0 440.0&quot; stroke=&quot;none&quot;/&gt;
+  &lt;line stroke=&quot;gray&quot; stroke-width=&quot;20&quot; x1=&quot;162.0&quot; x2=&quot;162.0&quot; y1=&quot;260.0&quot; y2=&quot;440.0&quot;/&gt;
+  &lt;line stroke=&quot;gray&quot; stroke-width=&quot;20&quot; x1=&quot;462.0&quot; x2=&quot;462.0&quot; y1=&quot;260.0&quot; y2=&quot;440.0&quot;/&gt;
+  &lt;line stroke=&quot;gray&quot; stroke-width=&quot;20&quot; x1=&quot;762.0&quot; x2=&quot;762.0&quot; y1=&quot;260.0&quot; y2=&quot;440.0&quot;/&gt;
+  &lt;polygon fill=&quot;magenta&quot; points=&quot;22.0 440.0 302.0 440.0 302.0 420.0 22.0 420.0&quot; stroke=&quot;none&quot;&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;190s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,0&quot; repeatCount=&quot;1&quot; to=&quot;0,-332.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;191s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-332.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-332.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;192s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-332.0&quot; repeatCount=&quot;1&quot; to=&quot;600,0&quot; type=&quot;translate&quot;/&gt;
+  &lt;/polygon&gt;
+  &lt;polygon fill=&quot;green&quot; points=&quot;42.0 420.0 282.0 420.0 282.0 400.0 42.0 400.0&quot; stroke=&quot;none&quot;&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;94s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,0&quot; repeatCount=&quot;1&quot; to=&quot;0,-312.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;95s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-312.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-312.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;96s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-312.0&quot; repeatCount=&quot;1&quot; to=&quot;300,20&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;286s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,20&quot; repeatCount=&quot;1&quot; to=&quot;300,-312.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;287s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-312.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-312.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;288s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-312.0&quot; repeatCount=&quot;1&quot; to=&quot;600,0&quot; type=&quot;translate&quot;/&gt;
+  &lt;/polygon&gt;
+  &lt;polygon fill=&quot;orange&quot; points=&quot;62.0 400.0 262.0 400.0 262.0 380.0 62.0 380.0&quot; stroke=&quot;none&quot;&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;46s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,0&quot; repeatCount=&quot;1&quot; to=&quot;0,-292.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;47s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-292.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-292.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;48s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-292.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;142s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-292.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;143s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-292.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-292.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;144s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-292.0&quot; repeatCount=&quot;1&quot; to=&quot;300,20&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;238s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,20&quot; repeatCount=&quot;1&quot; to=&quot;300,-292.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;239s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-292.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-292.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;240s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-292.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;334s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-292.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;335s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-292.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-292.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;336s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-292.0&quot; repeatCount=&quot;1&quot; to=&quot;600,0&quot; type=&quot;translate&quot;/&gt;
+  &lt;/polygon&gt;
+  &lt;polygon fill=&quot;blue&quot; points=&quot;82.0 380.0 242.0 380.0 242.0 360.0 82.0 360.0&quot; stroke=&quot;none&quot;&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;22s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,0&quot; repeatCount=&quot;1&quot; to=&quot;0,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;23s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;24s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;70s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;71s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;72s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;118s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;119s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;120s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;166s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;167s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;168s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;300,20&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;214s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,20&quot; repeatCount=&quot;1&quot; to=&quot;300,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;215s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;216s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;262s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;263s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;264s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;310s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;311s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;312s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;358s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;359s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-272.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;360s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-272.0&quot; repeatCount=&quot;1&quot; to=&quot;600,0&quot; type=&quot;translate&quot;/&gt;
+  &lt;/polygon&gt;
+  &lt;polygon fill=&quot;rgb(128, 128,   0)&quot; points=&quot;102.0 360.0 222.0 360.0 222.0 340.0 102.0 340.0&quot; stroke=&quot;none&quot;&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;10s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,0&quot; repeatCount=&quot;1&quot; to=&quot;0,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;11s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;12s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;34s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;35s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;36s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;58s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;59s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;60s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;82s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;83s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;84s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;106s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;107s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;108s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;130s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;131s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;132s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;154s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;155s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;156s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;178s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;179s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;180s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;300,20&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;202s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,20&quot; repeatCount=&quot;1&quot; to=&quot;300,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;203s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;204s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;226s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;227s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;228s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;250s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;251s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;252s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;274s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;275s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;276s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;298s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;299s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;300s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;322s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;323s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;324s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;346s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;347s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;348s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;370s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;371s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-252.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;372s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-252.0&quot; repeatCount=&quot;1&quot; to=&quot;600,0&quot; type=&quot;translate&quot;/&gt;
+  &lt;/polygon&gt;
+  &lt;polygon fill=&quot;rgb(128,   0,   0)&quot; points=&quot;122.0 340.0 202.0 340.0 202.0 320.0 122.0 320.0&quot; stroke=&quot;none&quot;&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;4s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,0&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;5s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;6s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;16s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;17s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;18s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;28s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;29s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;30s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;40s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;41s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;42s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;52s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;53s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;54s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;64s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;65s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;66s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;76s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;77s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;78s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;88s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;89s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;90s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;100s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;101s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;102s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;112s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;113s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;114s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;124s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;125s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;126s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;136s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;137s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;138s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;148s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;149s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;150s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;160s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;161s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;162s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;172s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;173s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;174s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;184s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;185s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;186s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,20&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;196s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,20&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;197s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;198s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;208s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;209s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;210s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;220s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;221s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;222s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;232s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;233s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;234s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;244s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;245s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;246s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;256s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;257s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;258s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;268s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;269s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;270s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;280s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;281s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;282s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;292s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;293s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;294s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;304s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;305s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;306s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;316s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;317s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;318s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;328s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;329s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;330s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;340s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;341s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;342s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;352s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;353s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;354s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;364s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;365s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;366s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;376s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;377s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-232.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;378s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-232.0&quot; repeatCount=&quot;1&quot; to=&quot;600,0&quot; type=&quot;translate&quot;/&gt;
+  &lt;/polygon&gt;
+  &lt;polygon fill=&quot;rgb(  0, 128, 128)&quot; points=&quot;142.0 320.0 182.0 320.0 182.0 300.0 142.0 300.0&quot; stroke=&quot;none&quot;&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;1s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;2s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;3s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,120&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;7s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,120&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;8s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;9s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;13s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;14s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;15s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;19s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;20s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;21s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;25s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;26s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;27s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;31s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;32s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;33s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;37s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;38s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;39s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,120&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;43s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,120&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;44s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;45s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;49s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;50s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;51s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;55s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;56s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;57s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;61s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;62s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;63s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;67s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;68s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;69s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;73s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;74s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;75s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;79s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;80s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;81s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;85s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;86s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;87s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;91s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;92s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;93s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;97s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;98s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;99s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;103s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;104s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;105s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;109s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;110s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;111s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;115s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;116s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;117s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;121s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;122s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;123s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;127s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;128s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;129s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;133s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;134s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;135s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;139s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;140s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;141s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;145s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;146s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;147s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,120&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;151s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,120&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;152s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;153s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;157s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;158s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;159s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;163s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;164s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;165s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;169s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;170s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;171s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;175s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;176s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;177s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;181s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;182s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;183s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,120&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;187s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,120&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;188s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;189s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,20&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;193s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,20&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;194s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;195s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,120&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;199s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,120&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;200s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;201s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;205s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;206s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;207s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;211s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;212s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;213s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;217s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;218s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;219s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;223s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;224s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;225s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;229s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;230s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;231s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,120&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;235s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,120&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;236s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;237s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;241s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;242s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;243s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;247s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;248s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;249s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;253s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;254s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;255s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;259s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;260s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;261s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;265s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;266s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;267s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;271s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;272s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;273s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;277s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;278s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;279s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;283s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;284s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;285s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;289s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,40&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;290s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;291s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;295s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;296s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;297s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;301s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;302s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;303s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;307s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;308s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;309s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;313s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;314s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;315s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;319s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;320s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;321s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;325s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;326s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;327s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;331s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,80&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;332s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;333s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,60&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;337s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,60&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;338s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;339s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,120&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;343s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,120&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;344s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;345s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;349s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;350s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;351s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;355s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;356s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;357s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,80&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;361s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,80&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;362s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;363s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,40&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;367s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,40&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;368s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;369s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;300,100&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;373s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,100&quot; repeatCount=&quot;1&quot; to=&quot;300,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;374s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;300,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;375s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;0,120&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;379s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,120&quot; repeatCount=&quot;1&quot; to=&quot;0,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;380s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;0,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,-212.0&quot; type=&quot;translate&quot;/&gt;
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;381s&quot; dur=&quot;1s&quot; fill=&quot;freeze&quot; from=&quot;600,-212.0&quot; repeatCount=&quot;1&quot; to=&quot;600,0&quot; type=&quot;translate&quot;/&gt;
+  &lt;/polygon&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    1
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;1.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    2
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;4.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    3
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;7.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    4
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;10.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    5
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;13.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    6
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;16.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    7
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;19.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    8
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;22.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    9
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;25.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    10
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;28.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    11
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;31.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    12
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;34.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    13
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;37.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    14
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;40.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    15
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;43.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    16
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;46.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    17
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;49.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    18
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;52.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    19
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;55.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    20
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;58.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    21
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;61.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    22
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;64.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    23
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;67.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    24
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;70.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    25
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;73.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    26
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;76.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    27
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;79.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    28
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;82.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    29
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;85.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    30
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;88.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    31
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;91.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    32
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;94.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    33
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;97.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    34
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;100.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    35
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;103.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    36
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;106.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    37
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;109.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    38
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;112.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    39
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;115.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    40
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;118.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    41
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;121.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    42
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;124.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    43
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;127.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    44
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;130.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    45
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;133.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    46
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;136.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    47
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;139.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    48
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;142.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    49
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;145.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    50
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;148.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    51
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;151.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    52
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;154.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    53
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;157.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    54
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;160.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    55
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;163.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    56
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;166.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    57
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;169.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    58
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;172.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    59
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;175.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    60
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;178.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    61
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;181.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    62
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;184.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    63
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;187.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    64
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;190.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    65
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;193.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    66
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;196.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    67
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;199.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    68
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;202.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    69
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;205.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    70
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;208.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    71
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;211.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    72
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;214.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    73
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;217.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    74
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;220.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    75
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;223.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    76
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;226.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    77
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;229.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    78
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;232.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    79
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;235.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    80
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;238.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    81
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;241.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    82
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;244.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    83
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;247.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    84
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;250.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    85
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;253.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    86
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;256.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    87
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;259.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    88
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;262.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    89
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;265.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    90
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;268.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    91
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;271.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    92
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;274.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    93
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;277.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    94
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;280.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    95
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;283.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    96
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;286.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    97
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;289.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    98
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;292.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    99
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;295.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    100
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;298.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    101
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;301.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    102
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;304.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    103
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;307.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    104
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;310.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    105
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;313.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    106
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;316.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    107
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;319.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    108
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;322.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    109
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;325.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    110
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;328.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    111
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;331.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    112
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;334.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    113
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;337.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    114
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;340.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    115
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;343.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    116
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;346.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    117
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;349.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    118
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;352.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    119
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;355.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    120
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;358.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    121
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;361.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    122
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;364.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    123
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;367.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    124
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;370.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    125
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;373.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    126
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;376.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+  &lt;text fill=&quot;magenta&quot; font-family=&quot;Microsoft JhengHei&quot; font-size=&quot;64px&quot; stroke-width=&quot;3&quot; x=&quot;412&quot; y=&quot;-10&quot;&gt;
+    127
+    &lt;animateTransform attributeName=&quot;transform&quot; begin=&quot;379.2s&quot; dur=&quot;3s&quot; fill=&quot;remove&quot; from=&quot;0, 86&quot; repeatCount=&quot;1&quot; to=&quot;0, 86&quot; type=&quot;translate&quot;/&gt;
+  &lt;/text&gt;
+&lt;/svg&gt;</code></pre></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
